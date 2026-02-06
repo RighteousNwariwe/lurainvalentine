@@ -10,51 +10,59 @@ function Valentine() {
   const yesVideoRef = useRef(null)
   const finalVideoRef = useRef(null)
 
+  const playAndUnmute = (videoRef) => {
+    if (!videoRef.current) return Promise.reject(new Error('Video element not found'))
+
+    const video = videoRef.current
+
+    // Start unmuted directly
+    video.muted = false
+    return video.play().then(() => {
+      console.log("Video started unmuted successfully")
+    }).catch(e => {
+      console.log("Video play error, trying muted:", e)
+      // If unmuted fails, fallback to muted
+      video.muted = true
+      return video.play().then(() => {
+        console.log("Video started muted as fallback")
+      }).catch(e => {
+        console.log("Even muted autoplay failed:", e)
+        throw e
+      })
+    })
+  }
+
   useEffect(() => {
     const startVideo = () => {
-      console.log("Attempting to start video...")
+      console.log("User interaction detected, starting video with sound...")
       if (initialVideoRef.current) {
-        console.log("Video element found:", initialVideoRef.current)
+        // Ensure video is unmuted and play
+        initialVideoRef.current.muted = false
         initialVideoRef.current.play().then(() => {
-          console.log("Video started successfully")
+          console.log("Video started with sound successfully")
         }).catch(e => {
-          console.log("Auto-play prevented, trying muted first:", e)
-          // Try muted first, then unmute
-          if (initialVideoRef.current) {
-            initialVideoRef.current.muted = true
-            initialVideoRef.current.play().then(() => {
-              console.log("Video started muted successfully")
-              // Once playing, try to unmute
-              setTimeout(() => {
-                if (initialVideoRef.current) {
-                  initialVideoRef.current.muted = false
-                  console.log("Video unmuted")
-                }
-              }, 100)
-            }).catch(e => console.log("Even muted autoplay failed:", e))
-          }
+          console.log("Video play error:", e)
         })
-      } else {
-        console.log("Video element not found")
       }
     }
 
-    // Try immediate play
-    startVideo()
-
-    // Also try on first user interaction
-    const handleInteraction = () => {
+    // Try on first user interaction (both click and touch)
+    const handleInteraction = (e) => {
+      e.preventDefault() // Prevent default touch behavior
       startVideo()
       document.removeEventListener('click', handleInteraction)
       document.removeEventListener('touchstart', handleInteraction)
+      document.removeEventListener('touchend', handleInteraction)
     }
 
     document.addEventListener('click', handleInteraction)
-    document.addEventListener('touchstart', handleInteraction)
+    document.addEventListener('touchstart', handleInteraction, { passive: false })
+    document.addEventListener('touchend', handleInteraction, { passive: false })
 
     return () => {
       document.removeEventListener('click', handleInteraction)
       document.removeEventListener('touchstart', handleInteraction)
+      document.removeEventListener('touchend', handleInteraction)
     }
   }, [])
 
@@ -62,14 +70,9 @@ function Valentine() {
     if (currentStage === 'initial') {
       setCurrentStage('yesVideo')
       setTimeout(() => {
-        if (yesVideoRef.current) {
-          console.log("Attempting to play yes video...")
-          yesVideoRef.current.play().then(() => {
-            console.log("Yes video started successfully")
-          }).catch(e => console.log("Yes video play error:", e))
-        } else {
-          console.log("Yes video element not found")
-        }
+        playAndUnmute(yesVideoRef).catch(e => {
+          console.log("Yes video play error:", e)
+        })
       }, 100)
     }
   }
@@ -86,14 +89,9 @@ function Valentine() {
     setIsGiftOpen(true)
     setTimeout(() => {
       setCurrentStage('final')
-      if (finalVideoRef.current) {
-        console.log("Attempting to play final video...")
-        finalVideoRef.current.play().then(() => {
-          console.log("Final video started successfully")
-        }).catch(e => console.log("Final video play error:", e))
-      } else {
-        console.log("Final video element not found")
-      }
+      playAndUnmute(finalVideoRef).catch(e => {
+        console.log("Final video play error:", e)
+      })
     }, 1000)
   }
 
@@ -118,7 +116,6 @@ function Valentine() {
               ref={initialVideoRef}
               autoPlay
               loop
-              muted
               controls
               className="stage-video"
             >
@@ -139,6 +136,7 @@ function Valentine() {
               <button
                 onClick={() => {
                   if (initialVideoRef.current) {
+                    initialVideoRef.current.muted = false
                     initialVideoRef.current.play().catch(e => console.log("Manual play error:", e))
                   }
                   handleYesClick()
@@ -151,6 +149,7 @@ function Valentine() {
               <button
                 onClick={() => {
                   if (initialVideoRef.current) {
+                    initialVideoRef.current.muted = false
                     initialVideoRef.current.play().catch(e => console.log("Manual play error:", e))
                   }
                   handleNoClick()
@@ -175,7 +174,6 @@ function Valentine() {
             <video
               ref={yesVideoRef}
               autoPlay
-              muted
               controls
               onEnded={handleYesVideoEnd}
               className="stage-video"
@@ -231,7 +229,6 @@ function Valentine() {
             <video
               ref={finalVideoRef}
               autoPlay
-              muted
               controls
               className="stage-video"
             >

@@ -266,33 +266,70 @@
 @media (max-width: 768px) {
   .stage-container {
     flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    padding: 1rem 0;
   }
 
   .video-section,
   .content-section {
-    flex: 1;
+    flex: none;
     padding: 1rem;
+    width: 100%;
+  }
+
+  .video-section {
+    min-height: 40vh;
+  }
+
+  .content-section {
+    min-height: 50vh;
+  }
+
+  .stage-video {
+    max-height: 50vh;
+    border-radius: 15px;
   }
 
   .message {
     padding: 1.5rem;
     margin-bottom: 1rem;
+    max-width: 90%;
   }
 
   .message h1 {
     font-size: 1.5rem;
+    line-height: 1.3;
   }
 
   .message h2 {
     font-size: 1.2rem;
+    line-height: 1.3;
   }
 
   .message p {
     font-size: 0.9rem;
+    line-height: 1.5;
   }
 
   .buttons-container {
     gap: 1rem;
+    flex-wrap: wrap;
+    padding: 0 1rem;
+  }
+
+  .yes-button {
+    padding: 0.8rem 1.5rem;
+    min-width: 100px;
+    min-height: 50px;
+    font-size: 0.9rem;
+  }
+
+  .no-button {
+    padding: 0.8rem 1.5rem;
+    min-width: 80px;
+    min-height: 50px;
+    font-size: 0.9rem;
   }
 
   .gift-box {
@@ -302,5 +339,114 @@
 
   .gift-body {
     height: 120px;
+  }
+
+  .gift-message {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 90%;
+  }
+
+  .gift-message h2 {
+    font-size: 1.5rem;
+  }
+
+  .play-hint p {
+    font-size: 0.8rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .valentine-container {
+    font-size: 14px;
+  }
+
+  .video-section,
+  .content-section {
+    padding: 0.5rem;
+  }
+
+  .stage-video {
+    max-height: 40vh;
+    border-radius: 10px;
+  }
+
+  .message {
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .message h1 {
+    font-size: 1.3rem;
+  }
+
+  .message h2 {
+    font-size: 1.1rem;
+  }
+
+  .message p {
+    font-size: 0.85rem;
+  }
+
+  .buttons-container {
+    gap: 0.8rem;
+    padding: 0 0.5rem;
+  }
+
+  .yes-button {
+    padding: 0.7rem 1.2rem;
+    min-width: 90px;
+    min-height: 45px;
+    font-size: 0.85rem;
+  }
+
+  .no-button {
+    padding: 0.7rem 1.2rem;
+    min-width: 70px;
+    min-height: 45px;
+    font-size: 0.85rem;
+  }
+
+  .gift-box {
+    width: 120px;
+    height: 120px;
+  }
+
+  .gift-body {
+    height: 100px;
+  }
+
+  .gift-message {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .gift-message h2 {
+    font-size: 1.3rem;
+  }
+
+  .heart {
+    font-size: 3rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .yes-button:hover,
+  .no-button:hover {
+    transform: none;
+  }
+
+  .yes-button:active {
+    transform: scale(0.95);
+  }
+
+  .no-button:active {
+    transform: scale(0.95);
+  }
+
+  .gift-box:active {
+    transform: scale(0.95);
   }
 }
