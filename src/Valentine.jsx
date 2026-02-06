@@ -119,7 +119,7 @@ function Valentine() {
               controls
               className="stage-video"
             >
-              <source src="/lurainvalentine/Be my valentine.mp4" type="video/mp4" />
+              <source src="/Be my valentine.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
@@ -178,7 +178,7 @@ function Valentine() {
               onEnded={handleYesVideoEnd}
               className="stage-video"
             >
-              <source src="/lurainvalentine/My valentine.mp4" type="video/mp4" />
+              <source src="/My valentine.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
@@ -232,7 +232,7 @@ function Valentine() {
               controls
               className="stage-video"
             >
-              <source src="/lurainvalentine/Miguel - Adorn (Lyrics).mp4" type="video/mp4" />
+              <source src="/Miguel - Adorn (Lyrics).mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
