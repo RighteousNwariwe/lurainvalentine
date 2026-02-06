@@ -66,6 +66,32 @@
   display: block;
 }
 
+/* Prevent video from expanding when playing */
+.stage-video:fullscreen {
+  max-width: 90vw !important;
+  max-height: 80vh !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+.stage-video:-webkit-full-screen {
+  max-width: 90vw !important;
+  max-height: 80vh !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* Prevent video controls from triggering fullscreen */
+.stage-video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
+.stage-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}
+
 .message {
   background: rgba(255, 255, 255, 0.95);
   padding: 2.5rem;

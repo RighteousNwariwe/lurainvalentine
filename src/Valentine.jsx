@@ -46,6 +46,34 @@ function Valentine() {
       }
     }
 
+    // Prevent fullscreen on all videos
+    const preventFullscreen = (videoRef) => {
+      if (videoRef.current) {
+        videoRef.current.addEventListener('fullscreenchange', (e) => {
+          if (document.fullscreenElement) {
+            document.exitFullscreen()
+          }
+        })
+        
+        videoRef.current.addEventListener('webkitfullscreenchange', (e) => {
+          if (document.webkitFullscreenElement) {
+            document.webkitExitFullscreen()
+          }
+        })
+
+        // Prevent double-click fullscreen
+        videoRef.current.addEventListener('dblclick', (e) => {
+          e.preventDefault()
+          e.stopPropagation()
+        })
+      }
+    }
+
+    // Apply fullscreen prevention to all video refs
+    preventFullscreen(initialVideoRef)
+    preventFullscreen(yesVideoRef)
+    preventFullscreen(finalVideoRef)
+
     // Try on first user interaction (both click and touch)
     const handleInteraction = (e) => {
       e.preventDefault() // Prevent default touch behavior
