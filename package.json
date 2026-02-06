@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://righteousnwariwe.github.io/lurainvalentine/",
   "scripts": {
     "dev": "vite",
     "build": "npx vite build",
