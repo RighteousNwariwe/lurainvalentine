@@ -56,11 +56,14 @@
 }
 
 .stage-video {
-  max-width: 100%;
+  max-width: 90%;
   max-height: 80vh;
+  width: auto;
+  height: auto;
   border-radius: 20px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  object-fit: cover;
+  object-fit: contain;
+  display: block;
 }
 
 .message {
@@ -288,7 +291,11 @@
 
   .stage-video {
     max-height: 50vh;
+    max-width: 90%;
+    width: auto;
+    height: auto;
     border-radius: 15px;
+    object-fit: contain;
   }
 
   .message {
@@ -368,8 +375,12 @@
   }
 
   .stage-video {
-    max-height: 40vh;
+    max-height: 35vh;
+    max-width: 85%;
+    width: auto;
+    height: auto;
     border-radius: 10px;
+    object-fit: contain;
   }
 
   .message {
@@ -433,6 +444,7 @@
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
+
   .yes-button:hover,
   .no-button:hover {
     transform: none;
