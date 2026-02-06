@@ -1,0 +1,306 @@
+.valentine-container {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Georgia', serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.valentine-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" font-size="100">💕</text></svg>');
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.stage-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  animation: fadeIn 0.8s ease-in;
+}
+
+.video-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.content-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.stage-video {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+}
+
+.message {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  max-width: 500px;
+}
+
+.message h1 {
+  color: #e91e63;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  animation: pulse 2s infinite;
+}
+
+.message h2 {
+  color: #d81b60;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.message p {
+  color: #555;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin: 0.8rem 0;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.yes-button {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(238, 90, 36, 0.4);
+  animation: heartbeat 1.5s infinite;
+  min-width: 120px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes heartbeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.yes-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 35px rgba(238, 90, 36, 0.6);
+}
+
+.no-button {
+  background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(149, 165, 166, 0.4);
+  min-width: 80px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(149, 165, 166, 0.5);
+}
+
+.play-hint {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.play-hint p {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.8rem 1.2rem;
+  border-radius: 15px;
+  color: #666;
+  font-size: 0.9rem;
+  backdrop-filter: blur(5px);
+  display: inline-block;
+}
+
+.gift-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.gift-message {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  margin-bottom: 3rem;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  max-width: 400px;
+}
+
+.gift-message h2 {
+  color: #e91e63;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.gift-message p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.gift-box {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gift-lid {
+  width: 100%;
+  height: 40px;
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.5s ease;
+  box-shadow: 0 5px 15px rgba(238, 90, 36, 0.3);
+}
+
+.gift-box.open .gift-lid {
+  transform: translateY(-100px) rotateZ(-10deg);
+  opacity: 0.8;
+}
+
+.gift-body {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(45deg, #ff8787, #ff6b6b);
+  border-radius: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+}
+
+.gift-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.gift-box.open .gift-content {
+  opacity: 1;
+}
+
+.heart {
+  font-size: 4rem;
+  animation: heartbeat 1s infinite;
+}
+
+@media (max-width: 768px) {
+  .stage-container {
+    flex-direction: column;
+  }
+
+  .video-section,
+  .content-section {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  .message {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .message h1 {
+    font-size: 1.5rem;
+  }
+
+  .message h2 {
+    font-size: 1.2rem;
+  }
+
+  .message p {
+    font-size: 0.9rem;
+  }
+
+  .buttons-container {
+    gap: 1rem;
+  }
+
+  .gift-box {
+    width: 150px;
+    height: 150px;
+  }
+
+  .gift-body {
+    height: 120px;
+  }
+}
