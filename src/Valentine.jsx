@@ -33,15 +33,27 @@ function Valentine() {
   }
 
   useEffect(() => {
-    const startVideo = () => {
-      console.log("User interaction detected, starting video with sound...")
-      if (initialVideoRef.current) {
-        // Ensure video is unmuted and play
+    const startVideoWithSound = () => {
+      if (initialVideoRef.current && currentStage === 'initial') {
+        console.log("Starting initial video with sound...")
         initialVideoRef.current.muted = false
         initialVideoRef.current.play().then(() => {
-          console.log("Video started with sound successfully")
+          console.log("Initial video started successfully with sound")
         }).catch(e => {
-          console.log("Video play error:", e)
+          console.log("Autoplay prevented, trying muted first:", e)
+          // Fallback to muted then unmute
+          if (initialVideoRef.current) {
+            initialVideoRef.current.muted = true
+            initialVideoRef.current.play().then(() => {
+              console.log("Video started muted, attempting to unmute...")
+              setTimeout(() => {
+                if (initialVideoRef.current) {
+                  initialVideoRef.current.muted = false
+                  console.log("Video unmuted successfully")
+                }
+              }, 500)
+            }).catch(e => console.log("Even muted autoplay failed:", e))
+          }
         })
       }
     }
@@ -54,7 +66,7 @@ function Valentine() {
             document.exitFullscreen()
           }
         })
-        
+
         videoRef.current.addEventListener('webkitfullscreenchange', (e) => {
           if (document.webkitFullscreenElement) {
             document.webkitExitFullscreen()
@@ -74,25 +86,23 @@ function Valentine() {
     preventFullscreen(yesVideoRef)
     preventFullscreen(finalVideoRef)
 
-    // Try on first user interaction (both click and touch)
-    const handleInteraction = (e) => {
-      e.preventDefault() // Prevent default touch behavior
-      startVideo()
+    // Start video immediately and also on user interaction
+    startVideoWithSound()
+
+    const handleInteraction = () => {
+      startVideoWithSound()
       document.removeEventListener('click', handleInteraction)
       document.removeEventListener('touchstart', handleInteraction)
-      document.removeEventListener('touchend', handleInteraction)
     }
 
     document.addEventListener('click', handleInteraction)
-    document.addEventListener('touchstart', handleInteraction, { passive: false })
-    document.addEventListener('touchend', handleInteraction, { passive: false })
+    document.addEventListener('touchstart', handleInteraction)
 
     return () => {
       document.removeEventListener('click', handleInteraction)
       document.removeEventListener('touchstart', handleInteraction)
-      document.removeEventListener('touchend', handleInteraction)
     }
-  }, [])
+  }, [currentStage])
 
   const handleYesClick = () => {
     if (currentStage === 'initial') {
@@ -144,7 +154,6 @@ function Valentine() {
               ref={initialVideoRef}
               autoPlay
               loop
-              controls
               className="stage-video"
             >
               <source src="/Be my valentine.mp4" type="video/mp4" />
@@ -163,10 +172,6 @@ function Valentine() {
             <div className="buttons-container">
               <button
                 onClick={() => {
-                  if (initialVideoRef.current) {
-                    initialVideoRef.current.muted = false
-                    initialVideoRef.current.play().catch(e => console.log("Manual play error:", e))
-                  }
                   handleYesClick()
                 }}
                 className="yes-button"
@@ -176,10 +181,6 @@ function Valentine() {
               </button>
               <button
                 onClick={() => {
-                  if (initialVideoRef.current) {
-                    initialVideoRef.current.muted = false
-                    initialVideoRef.current.play().catch(e => console.log("Manual play error:", e))
-                  }
                   handleNoClick()
                 }}
                 className="no-button"
@@ -202,7 +203,6 @@ function Valentine() {
             <video
               ref={yesVideoRef}
               autoPlay
-              controls
               onEnded={handleYesVideoEnd}
               className="stage-video"
             >
@@ -257,7 +257,6 @@ function Valentine() {
             <video
               ref={finalVideoRef}
               autoPlay
-              controls
               className="stage-video"
             >
               <source src="/Miguel - Adorn (Lyrics).mp4" type="video/mp4" />
