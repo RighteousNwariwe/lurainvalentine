@@ -12,22 +12,30 @@ function Valentine() {
 
   useEffect(() => {
     const startVideo = () => {
+      console.log("Attempting to start video...")
       if (initialVideoRef.current) {
-        initialVideoRef.current.play().catch(e => {
+        console.log("Video element found:", initialVideoRef.current)
+        initialVideoRef.current.play().then(() => {
+          console.log("Video started successfully")
+        }).catch(e => {
           console.log("Auto-play prevented, trying muted first:", e)
           // Try muted first, then unmute
           if (initialVideoRef.current) {
             initialVideoRef.current.muted = true
             initialVideoRef.current.play().then(() => {
+              console.log("Video started muted successfully")
               // Once playing, try to unmute
               setTimeout(() => {
                 if (initialVideoRef.current) {
                   initialVideoRef.current.muted = false
+                  console.log("Video unmuted")
                 }
               }, 100)
             }).catch(e => console.log("Even muted autoplay failed:", e))
           }
         })
+      } else {
+        console.log("Video element not found")
       }
     }
 
@@ -55,7 +63,12 @@ function Valentine() {
       setCurrentStage('yesVideo')
       setTimeout(() => {
         if (yesVideoRef.current) {
-          yesVideoRef.current.play().catch(e => console.log("Video play error:", e))
+          console.log("Attempting to play yes video...")
+          yesVideoRef.current.play().then(() => {
+            console.log("Yes video started successfully")
+          }).catch(e => console.log("Yes video play error:", e))
+        } else {
+          console.log("Yes video element not found")
         }
       }, 100)
     }
@@ -74,7 +87,12 @@ function Valentine() {
     setTimeout(() => {
       setCurrentStage('final')
       if (finalVideoRef.current) {
-        finalVideoRef.current.play().catch(e => console.log("Video play error:", e))
+        console.log("Attempting to play final video...")
+        finalVideoRef.current.play().then(() => {
+          console.log("Final video started successfully")
+        }).catch(e => console.log("Final video play error:", e))
+      } else {
+        console.log("Final video element not found")
       }
     }, 1000)
   }
@@ -100,6 +118,8 @@ function Valentine() {
               ref={initialVideoRef}
               autoPlay
               loop
+              muted
+              controls
               className="stage-video"
             >
               <source src="/Be my valentine.mp4" type="video/mp4" />
@@ -155,6 +175,8 @@ function Valentine() {
             <video
               ref={yesVideoRef}
               autoPlay
+              muted
+              controls
               onEnded={handleYesVideoEnd}
               className="stage-video"
             >
@@ -209,6 +231,8 @@ function Valentine() {
             <video
               ref={finalVideoRef}
               autoPlay
+              muted
+              controls
               className="stage-video"
             >
               <source src="/Miguel - Adorn (Lyrics).mp4" type="video/mp4" />
